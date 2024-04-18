@@ -9,8 +9,13 @@
             "args": [
                 "-g",
                 "${file}",
+                "${WorkspaceFolder}/execute/**",
                 "-o",
-                "${fileDirname}/${fileBasenameNoExtension}"
+                "${fileDirname}/${fileBasenameNoExtension}",
+                "-I",
+                "${WorkspaceFolder}/include/**"
+            
+
             ],
             "options": {
                 "cwd": "${fileDirname}"
@@ -25,3 +30,4 @@
             "detail": "compiler: /usr/bin/g++"
         }
     ]
+}

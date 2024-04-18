@@ -1,0 +1,4 @@
+server:
+	@echo "Starting server..."
+	g++ server.cpp utils.cpp -o output/server 
+	g++ client.cpp utils.cpp -o output/client 
