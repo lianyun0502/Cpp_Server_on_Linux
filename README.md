@@ -20,4 +20,10 @@
     * webbench測試
     * 文件下載 (可以續傳)
     * 靜態資源處理
-......
+
+### update
+
+    commit 5e2ab8606c1b5e8104c628f15680e81c94a4fd5b
+    - 練習了linux socket 的使用，及建立一個會echo message的server
+    - 了解了socket的desciption file的概念，及字元流的概念
+    - 複習TCP/IP的基本概念
