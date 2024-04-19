@@ -11,9 +11,10 @@
     * OS: Ubuntu 22.04.4 LTS
     * Compiler: g++ 7.5.0
     * IDE: Visual Studio Code
-    * C++: C++11
+    * C++: C++17
 
 ### To Do
+    * 高並發處理
     * 定時器
     * 日誌系統
     * HTTP協議解析
@@ -23,7 +24,17 @@
 
 ### update
 
-    commit 5e2ab8606c1b5e8104c628f15680e81c94a4fd5b
+    4/18
     - 練習了linux socket 的使用，及建立一個會echo message的server
     - 了解了socket的desciption file的概念，及字元流的概念
     - 複習TCP/IP的基本概念
+    
+    4/19
+    - study 伺服器模型
+    - study I/O處理模型(blocking, nonblocking, multiplexing, signal driven I/O, asynchronous I/O)
+    - study multiplexing I/O (select, poll, epoll)
+    - study epoll model, Edge Triggered and Level Triggered
+    - 實作epoll模型
+
+
+    

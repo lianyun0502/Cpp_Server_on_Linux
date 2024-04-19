@@ -29,14 +29,14 @@ int main(){
     while(true){
         char buff[1024];
         bzero(buff, sizeof(buff));
-        cout << " write some message :" <<endl;
+        cout << "write some message :" <<endl;
         cin.getline(buff, 1024);
-        ssize_t write_bytes = write(client_fd, buff, sizeof(buff));
+        ssize_t write_bytes = send(client_fd, buff, sizeof(buff), 0);
         PrintError(write_bytes == -1, "write error");
 
         bzero(buff, sizeof(buff));
 
-        ssize_t read_bytes = read(client_fd, buff, sizeof(buff));
+        ssize_t read_bytes = recv(client_fd, buff, sizeof(buff), 0);
 
         if (read_bytes == -1){
             PrintError(true, "read error");
@@ -45,7 +45,7 @@ int main(){
             cout << "EOF" << endl;
 
         }else{
-            cout << "echo :" << buff <<endl;
+            cout << "echo : " << buff <<endl;
         }
     }
     return 0;
