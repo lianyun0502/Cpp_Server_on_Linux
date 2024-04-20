@@ -6,6 +6,7 @@
 #include<unistd.h>
 
 #include "utils.h"
+#include "Socket.h"
 
 using namespace std;
 
@@ -16,31 +17,31 @@ uint16_t port = 8888;
 
 int main(){
 
-    int client_fd = socket(AF_INET, SOCK_STREAM, 0);
+    Socket * client = new Socket(Domain::IPv4, Type::TCP);
+
     struct sockaddr_in clit_addr;
     memset(&clit_addr, 0, sizeof(clit_addr));
     clit_addr.sin_addr.s_addr = inet_addr(addr);
     clit_addr.sin_port = htons(port);
     clit_addr.sin_family = AF_INET;
 
-    int conn_status = connect(client_fd, (const sockaddr *)&clit_addr, sizeof(clit_addr));
-    PrintError(conn_status == -1, "connect failed!");
+    client->connect(clit_addr);
 
     while(true){
         char buff[1024];
         bzero(buff, sizeof(buff));
-        cout << "write some message :" <<endl;
+        cout << "write some message : ";
         cin.getline(buff, 1024);
-        ssize_t write_bytes = send(client_fd, buff, sizeof(buff), 0);
-        PrintError(write_bytes == -1, "write error");
+        ssize_t write_bytes = send(client->get_fd(), buff, sizeof(buff), 0);
+        print_error(write_bytes == -1, "write error");
 
         bzero(buff, sizeof(buff));
 
-        ssize_t read_bytes = recv(client_fd, buff, sizeof(buff), 0);
+        ssize_t read_bytes = recv(client->get_fd(), buff, sizeof(buff), 0);
 
         if (read_bytes == -1){
-            PrintError(true, "read error");
-            close(client_fd);
+            print_error(true, "read error");
+            close(client->get_fd());
         } else if (read_bytes == 0){
             cout << "EOF" << endl;
 
@@ -48,5 +49,6 @@ int main(){
             cout << "echo : " << buff <<endl;
         }
     }
+    delete client;
     return 0;
 }
