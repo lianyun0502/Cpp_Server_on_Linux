@@ -18,7 +18,7 @@ enum class Type
 
 class Socket
 {
-    int fd = -1;
+    int _fd = -1;
 public:
     Socket(Domain domain, Type type, int protocol=0);
     ~Socket();

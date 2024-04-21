@@ -44,7 +44,7 @@ int main(){
             close(client->get_fd());
         } else if (read_bytes == 0){
             cout << "EOF" << endl;
-
+            break;
         }else{
             cout << "echo : " << buff <<endl;
         }
