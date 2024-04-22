@@ -36,5 +36,8 @@
     - study epoll model, Edge Triggered and Level Triggered
     - 實作epoll模型
 
+    4/21
+    - 重構socket成一個class
+    - 重構epoll成一個class
 
     
