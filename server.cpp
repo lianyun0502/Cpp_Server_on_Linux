@@ -20,6 +20,29 @@ using namespace std;
 const char * addr = "0.0.0.0";
 uint16_t port = 8888;
 
+void et_read_event_handler(int read_fd){
+    while(true){
+        char buff[1024];
+        memset(buff, 0, sizeof(buff));
+        ssize_t read_bytes = recv(read_fd, buff, sizeof(buff), 0);
+        if (read_bytes > 0){
+            cout <<"get message from client : "<< buff <<endl;
+            send(read_fd, buff, sizeof(buff), 0);
+        } else if (read_bytes == -1 && errno == EINTR){
+            // client normal interrupt;
+            cout <<"interrupted "<< buff <<endl;
+            continue; 
+        } else if (read_bytes == -1 &&(errno == EAGAIN || errno == EWOULDBLOCK)){
+            // data is all recived 
+            cout <<"blocked "<< buff <<endl;
+            break;
+        } else if (read_bytes == 0){
+            cout << "End of file" << endl;
+            close(read_fd);
+            break;
+        }
+    }
+}
 
 int main(){
     Socket *server = new Socket(Domain::IPv4, Type::TCP);
@@ -53,39 +76,22 @@ int main(){
                 struct sockaddr_in clit_addr;
                 socklen_t clit_sock_len = sizeof(clit_addr);
                 memset(&clit_addr, 0, clit_sock_len);
+
                 int clit_socket_fd = server->accept(clit_addr);
                 set_non_blocking(clit_socket_fd);
 
                 struct epoll_event ev_c;
                 ev_c.events = EPOLLIN | EPOLLET; // set epoll event to read and edge-triggered
                 ev_c.data.fd = clit_socket_fd;
+
                 epoll.ctl_add(clit_socket_fd, &ev_c);
                 cout << "add client" << endl;
 
             }else if (epoll.events[i].events == EPOLLIN){
-                while(true){
-                    char buff[1024];
-                    memset(buff, 0, sizeof(buff));
-                    ssize_t read_bytes = recv(epoll.events[i].data.fd, buff, sizeof(buff), 0);
-                    if (read_bytes > 0){
-                        cout <<"get message from client : "<< buff <<endl;
-                        send(epoll.events[i].data.fd, buff, sizeof(buff), 0);
-                    } else if (read_bytes == -1 && errno == EINTR){
-                        // client normal interrupt;
-                        cout <<"interrupted "<< buff <<endl;
-                        continue; 
-                    } else if (read_bytes == -1 &&(errno == EAGAIN || errno == EWOULDBLOCK)){
-                        // data is all recived 
-                        cout <<"blocked "<< buff <<endl;
-                        break;
-                    } else if (read_bytes == 0){
-                        cout << "End of file" << endl;
-                        close(epoll.events[i].data.fd);
-                        break;
-                    }
-                }
+                et_read_event_handler(epoll.events[i].data.fd);
             }
         }
+        
     }
     delete server;
     return 0;
