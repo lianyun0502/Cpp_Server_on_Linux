@@ -1,5 +1,6 @@
 #include "Epoll.h"
 #include "utils.h"
+#include <memory>
 
 
 
@@ -56,4 +57,18 @@ struct epoll_event creat_event(int fd, uint32_t events, bool is_et)
     event.events = events;
     if (is_et){ event.events |= EPOLLET; }
     return event; // 怕返回的是局部變數，所以要用拷貝
+}
+
+int Epoll::get_fd()
+{
+    return this->_fd;
+}
+
+
+unique_ptr<struct epoll_event> gen_epoll_event(int fd, uint32_t events, ...){
+    unique_ptr<struct epoll_event> ev = make_unique<struct epoll_event>();
+    memset(ev.get(), 0, sizeof(struct epoll_event));
+    ev->events = events; // set epoll event to read and edge-triggered
+    ev->data.fd = fd;
+    return ev;
 }

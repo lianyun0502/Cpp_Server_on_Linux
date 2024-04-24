@@ -1,12 +1,3 @@
-#include<sys/socket.h>
-#include<errno.h>
-#include<netinet/in.h>
-#include<arpa/inet.h>
-#include<string>
-#include<cstring>
-#include<fcntl.h>
-#include<unistd.h>
-#include<exception>
 
 #include "utils.h"
 #include "Socket.h"
@@ -71,6 +62,12 @@ int Socket::get_fd()
     return this->_fd;
 };
 
-
-
+unique_ptr<sockaddr_in> inet_addr(Domain domain, const char * addr, uint16_t port){
+    unique_ptr<sockaddr_in> serv_addr = make_unique<sockaddr_in>();
+    memset(serv_addr.get(), 0, sizeof(sockaddr_in));
+    serv_addr->sin_family = (sa_family_t)domain;
+    serv_addr->sin_addr.s_addr = inet_addr(addr);
+    serv_addr->sin_port = htons(port);
+    return serv_addr;
+}
 

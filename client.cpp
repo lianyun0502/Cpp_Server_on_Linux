@@ -3,10 +3,11 @@
 #include<netinet/in.h>
 #include<arpa/inet.h>
 #include<string.h>
+#include<string>
 #include<unistd.h>
 
-#include "utils.h"
-#include "Socket.h"
+#include "src/utils.h"
+#include "src/Socket.h"
 
 using namespace std;
 
@@ -26,17 +27,15 @@ int main(){
     clit_addr.sin_family = AF_INET;
 
     client->connect(clit_addr);
-
+    char buff[1024];
+    string s;
     while(true){
-        char buff[1024];
-        bzero(buff, sizeof(buff));
         cout << "write some message : ";
-        cin.getline(buff, 1024);
-        ssize_t write_bytes = send(client->get_fd(), buff, sizeof(buff), 0);
+        getline(cin, s);
+        ssize_t write_bytes = send(client->get_fd(), s.c_str(), s.length(), 0);
         print_error(write_bytes == -1, "write error");
 
         bzero(buff, sizeof(buff));
-
         ssize_t read_bytes = recv(client->get_fd(), buff, sizeof(buff), 0);
 
         if (read_bytes == -1){

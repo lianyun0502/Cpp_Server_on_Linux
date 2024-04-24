@@ -40,4 +40,9 @@
     - 重構socket成一個class
     - 重構epoll成一個class
 
+    4/24
+    - study reactor and proactor
+    - study event driven model
+    - 開始實作reactor模型，先封裝了 EventLoop 類
+
     

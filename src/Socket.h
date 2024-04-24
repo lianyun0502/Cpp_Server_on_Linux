@@ -1,5 +1,18 @@
 #pragma once
-#include <sys/socket.h>
+#include<sys/socket.h>
+#include<errno.h>
+#include<netinet/in.h>
+#include<arpa/inet.h>
+#include<string>
+#include<cstring>
+#include<fcntl.h>
+#include<unistd.h>
+#include<exception>
+#include<memory>
+
+
+
+
 
 
 enum class Domain 
@@ -28,3 +41,5 @@ public:
     int accept(const struct sockaddr_in &client_addr);
     int get_fd();
 };
+
+unique_ptr<sockaddr_in> inet_addr(Domain domain, const char * addr, uint16_t port);
