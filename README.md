@@ -45,4 +45,7 @@
     - study event driven model
     - 開始實作reactor模型，先封裝了 EventLoop 類
 
+    4/25
+    - 封裝了新的類 Event 類，用來封裝epoll_event的事件類型，因為覺得每個事件驅動的事件函數應該是與事件本身相關的，所以將事件函數封裝在Event類中
+
     
