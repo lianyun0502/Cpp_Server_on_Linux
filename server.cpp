@@ -16,6 +16,7 @@
 #include "src/Socket.h"
 #include "src/Epoll.h"
 #include "src/EventLoop.h"
+#include "src/Event.h"
 using namespace std;
 
 
@@ -30,12 +31,17 @@ int main(){
     server->listen();
     
     Epoll *epoll = new Epoll(5);
-    auto ev = gen_epoll_event(server->get_fd(), EPOLLIN | EPOLLET);
+    // auto ev = gen_epoll_event(server->get_fd(), EPOLLIN | EPOLLET);
+    Event *event = new Event(epoll, server->get_fd(), EPOLLIN | EPOLLET);
+    auto ev = event->gen_epoll_event();
+    auto cb = bind(accept_connection_handler, server, epoll);
+    event->set_callback(cb);
     epoll->ctl_add(server->get_fd(), ev.get());
 
     EventLoop * loop = new EventLoop(epoll, server);
     loop->run();
    
+    delete event;
     delete server;
     delete epoll;
     delete loop;

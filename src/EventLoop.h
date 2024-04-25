@@ -3,6 +3,7 @@
 #include"Epoll.h"
 #include"Socket.h"
 #include"utils.h"
+#include"Event.h"
 
 using namespace std;
 
@@ -19,3 +20,4 @@ public:
 };
 
 void et_read_event_handler(int read_fd);
+void accept_connection_handler(Socket* socket, Epoll* epoll);

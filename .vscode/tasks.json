@@ -9,13 +9,11 @@
             "args": [
                 "-g",
                 "${file}",
-                "${WorkspaceFolder}/execute/**",
+                "${workspaceFolder}/src/*.cpp",
                 "-o",
-                "${fileDirname}/${fileBasenameNoExtension}",
+                "${workspaceFolder}/debug/${fileBasenameNoExtension}",
                 "-I",
-                "${WorkspaceFolder}/include/**"
-            
-
+                "${workspaceFolder}/include/src"
             ],
             "options": {
                 "cwd": "${fileDirname}"
