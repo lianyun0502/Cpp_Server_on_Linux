@@ -1,4 +1,4 @@
 server:
 	@echo "Starting server..."
-	g++ server.cpp src/utils.cpp src/Socket.cpp src/Epoll.cpp src/Event.cpp src/EventLoop.cpp  --std c++23 -o output/server 
+	g++ src/utils.cpp src/Socket.cpp src/Epoll.cpp src/Event.cpp src/EventLoop.cpp src/Acceptor.cpp server.cpp --std c++23 -o output/server 
 	g++ client.cpp src/utils.cpp src/Socket.cpp -o output/client 

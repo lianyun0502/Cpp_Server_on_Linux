@@ -5,6 +5,9 @@
 Event::Event(Epoll* epoll, int fd, uint32_t events):_ep(epoll), _fd(fd), _events(events){
     _callback = [](){cout << "default callback" << endl;};
 }
+Event::Event(int fd, uint32_t events): _fd(fd), _events(events){
+    _callback = [](){cout << "default callback" << endl;};
+}
 
 Event::~Event(){cout << "Event destructor" << endl;}
 

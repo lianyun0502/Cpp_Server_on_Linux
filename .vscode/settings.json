@@ -19,5 +19,15 @@
   "liveshare.accessibility.accessibilityFeaturesEnabled": "on",
   "liveshare.allowGuestDebugControl": true,
   "liveshare.allowGuestTaskControl": true,
-  "liveshare.alwaysFollowHost": true
+  "liveshare.alwaysFollowHost": true,
+  "files.associations": {
+    "array": "cpp",
+    "*.tcc": "cpp",
+    "memory": "cpp",
+    "istream": "cpp",
+    "functional": "cpp",
+    "tuple": "cpp",
+    "utility": "cpp",
+    "new": "cpp"
+  }
 }

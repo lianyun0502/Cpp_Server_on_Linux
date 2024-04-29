@@ -7,17 +7,18 @@
 
 using namespace std;
 
-
 class EventLoop
 {
     Epoll* _epoll;
-    Socket* _socket;
 
 public:
-    EventLoop(Epoll *epoll, Socket *_socket);
+    EventLoop(Epoll *epoll);
     ~EventLoop();
     void run();
+    void add_event(Event& event);
+    void remove_event(Event& event);
+    void modify_event(Event& event);
 };
 
-void et_read_event_handler(int read_fd);
-void accept_connection_handler(Socket* socket, Epoll* epoll);
+// void et_read_event_handler(int read_fd);
+// void accept_connection_handler(Socket* socket, Epoll* epoll);

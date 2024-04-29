@@ -12,11 +12,12 @@ using namespace std;
 class Event
 {
     Epoll* _ep = nullptr; //記錄這是屬於哪個epoll
-    int _fd = -1;
-    uint32_t _events = 0;
+    int _fd = -1;  // 監聽的文件描述符
+    uint32_t _events = 0; // 監聽的事件類型 bitmap
     function<void()> _callback;
 public:
     Event(Epoll *epoll, int fd, uint32_t events);
+    Event(int fd, uint32_t events);
     ~Event();
     void run_event_handle();
     int get_fd();

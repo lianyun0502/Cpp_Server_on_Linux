@@ -15,7 +15,7 @@ using namespace std;
 
 class Epoll
 {
-    int _fd;
+    int _fd; // epoll fd
     
 public:
     struct epoll_event* _events = nullptr;

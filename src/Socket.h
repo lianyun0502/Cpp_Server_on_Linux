@@ -42,4 +42,5 @@ public:
     int get_fd();
 };
 
+#include <memory>
 unique_ptr<sockaddr_in> inet_addr(Domain domain, const char * addr, uint16_t port);

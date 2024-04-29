@@ -9,7 +9,8 @@ Socket::Socket(Domain domain, Type type, int protocol)
 {
     this->_fd = socket(static_cast<int>(domain), static_cast<int>(type), protocol);
     print_error(this->_fd == -1, "Socket creation failed");
-};
+    cout << "Socket created, fd = " << _fd << endl;
+}
 
 Socket::~Socket()
 {
@@ -17,7 +18,7 @@ Socket::~Socket()
     {
         close(this->_fd);
     }
-};
+}
 
 void Socket::bind(const struct sockaddr_in &addr)
 {
@@ -26,7 +27,7 @@ void Socket::bind(const struct sockaddr_in &addr)
     int status = ::bind(this->_fd, (const sockaddr*)&addr, sizeof(addr));
     print_error(status == -1, "Bind failed");
     cout << "bind success" << endl;
-};
+}
 
 void Socket::listen(u_int16_t max_conn_sock)
 {
@@ -40,7 +41,7 @@ void Socket::listen(u_int16_t max_conn_sock)
     {
         throw runtime_error(strerror(errno));
     }
-};
+}
 
 int Socket::accept(const struct sockaddr_in &client_addr){
     socklen_t s_len = sizeof(client_addr);
@@ -48,19 +49,19 @@ int Socket::accept(const struct sockaddr_in &client_addr){
     print_error(client_fd == -1, "Accept failed");
     printf("new client fd %d! IP: %s Port: %d\n", client_fd, inet_ntoa(client_addr.sin_addr), ntohs(client_addr.sin_port));
     return client_fd;
-};
+}
 
 void Socket::connect(const struct sockaddr_in &addr){
     cout << "connecting..." << endl;
     int status = ::connect(this->_fd, (sockaddr *)&addr, sizeof(addr));
     print_error(status == -1, "Connect failed");
     
-};
+}
 
 int Socket::get_fd()
 {
     return this->_fd;
-};
+}
 
 unique_ptr<sockaddr_in> inet_addr(Domain domain, const char * addr, uint16_t port){
     unique_ptr<sockaddr_in> serv_addr = make_unique<sockaddr_in>();
