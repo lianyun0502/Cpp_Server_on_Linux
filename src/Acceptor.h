@@ -13,6 +13,7 @@
 
 using namespace std;
 
+
 class Acceptor 
 {
     Socket* _sock;
@@ -28,6 +29,6 @@ public:
 };
 
 
-void et_read_event_handler(int read_fd);
-void accept_connection_handler(Socket* socket, Epoll* epoll);
-
+// void et_read_event_handler(int read_fd);
+// void accept_connection_handler(Socket* socket, Epoll* epoll);
+// 

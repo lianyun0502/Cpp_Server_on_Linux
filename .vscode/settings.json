@@ -28,6 +28,26 @@
     "functional": "cpp",
     "tuple": "cpp",
     "utility": "cpp",
-    "new": "cpp"
+    "new": "cpp",
+    "ostream": "cpp",
+    "atomic": "cpp",
+    "bit": "cpp",
+    "cmath": "cpp",
+    "compare": "cpp",
+    "concepts": "cpp",
+    "string": "cpp",
+    "unordered_map": "cpp",
+    "exception": "cpp",
+    "algorithm": "cpp",
+    "memory_resource": "cpp",
+    "random": "cpp",
+    "string_view": "cpp",
+    "type_traits": "cpp",
+    "iosfwd": "cpp",
+    "limits": "cpp",
+    "numeric": "cpp",
+    "streambuf": "cpp",
+    "system_error": "cpp",
+    "typeinfo": "cpp"
   }
 }
