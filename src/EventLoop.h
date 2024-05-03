@@ -12,7 +12,7 @@ class EventLoop
     Epoll* _epoll;
 
 public:
-    EventLoop(Epoll *epoll);
+    EventLoop(Epoll *epoll=nullptr);
     ~EventLoop();
     void run();
     void add_event(Event& event);

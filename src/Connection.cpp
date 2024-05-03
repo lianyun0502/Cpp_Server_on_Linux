@@ -3,7 +3,7 @@ using namespace std;
 
 
 Connection::Connection(EventLoop* loop, int fd)
-: _loop(loop), _fd(fd)
+: _loop(loop), _fd(fd), read_buffer(new Buffer)
 {
     _event = new Event(_fd, EPOLLIN | EPOLLET);
     auto cb = bind(&Connection::handle_connection, this);
@@ -15,6 +15,7 @@ Connection::~Connection()
 {
     // cout << "Connection::~Connection" << endl;
     delete _event;
+    delete read_buffer;
 }
 
 void Connection::handle_connection()
@@ -36,3 +37,39 @@ void Connection::disconnect()
     delete this;
 }
 
+
+
+
+void Buffer::collect(const char* data)
+{
+    int data_len = strlen(data);
+    for (int i=0 ; i< data_len ; ++i){
+        if (data[i] == '\0'){break;}
+            _buffer->push_back(data[i]);
+        }
+}
+
+void Buffer::collect(string &data)
+{
+    *_buffer = *_buffer + data;
+}
+
+string& Buffer::get_data()
+{
+    return *_buffer;
+}
+
+void Buffer::clear()
+{
+    _buffer->clear();
+}
+
+size_t Buffer::get_size()
+{
+    return _buffer->size();
+}
+
+Buffer::~Buffer()
+{
+    delete _buffer;
+}

@@ -34,11 +34,12 @@ class Socket
     int _fd = -1;
 public:
     Socket(Domain domain, Type type, int protocol=0);
+    Socket(int fd);
     ~Socket();
     void bind(const struct sockaddr_in &addr);
     void listen(u_int16_t max_conn_sock = SOMAXCONN);
     void connect(const struct sockaddr_in &addr);
-    int accept(const struct sockaddr_in &client_addr);
+    int accept();
     int get_fd();
 };
 

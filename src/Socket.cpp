@@ -12,6 +12,12 @@ Socket::Socket(Domain domain, Type type, int protocol)
     cout << "Socket created, fd = " << _fd << endl;
 }
 
+Socket::Socket(int fd)
+: _fd(fd)
+{
+    cout << "Socket created, fd = " << _fd << endl;
+}
+
 Socket::~Socket()
 {
     if (this->_fd != -1)
@@ -43,8 +49,10 @@ void Socket::listen(u_int16_t max_conn_sock)
     }
 }
 
-int Socket::accept(const struct sockaddr_in &client_addr){
+int Socket::accept(){
+    struct sockaddr_in client_addr;
     socklen_t s_len = sizeof(client_addr);
+    memset(&client_addr, 0, s_len);
     int client_fd = ::accept(this->_fd, (sockaddr *)&client_addr, &s_len);
     print_error(client_fd == -1, "Accept failed");
     printf("new client fd %d! IP: %s Port: %d\n", client_fd, inet_ntoa(client_addr.sin_addr), ntohs(client_addr.sin_port));

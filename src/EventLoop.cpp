@@ -5,7 +5,11 @@
 
 using namespace std;
 
-EventLoop::EventLoop(Epoll* epoll):_epoll(epoll){}
+EventLoop::EventLoop(Epoll* epoll):_epoll(epoll){
+    if (_epoll == nullptr) {
+        _epoll = new Epoll();
+    }
+}
 
 EventLoop::~EventLoop() {
     // Close the epoll file descriptor

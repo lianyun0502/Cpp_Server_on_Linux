@@ -56,3 +56,9 @@
     - 封裝了tcp connection類，用來處理tcp的連接，並且將tcp connection類與event loop類進行了解耦
     - bind函數在填入參數時要小心，不要重複填入，否則有可能會銷毀原本的物件
     - 單線程的reactor模型已經完成，之後會進行多線程的改進
+
+    5/3
+    - study 了多線程的標準庫 std::thread ，並十做了一個線程池的類去管理執行緒
+    - study 了線程鎖 std::mutex, std::lock_guard, std::unique_lock，並使用鎖去避免造成race condition
+    - study 了條件變數 std::condition_variable, std::condition_variable_any，並使用條件變數去達到線程同步的目的
+    - 之後會將reactor模型改進成多線程的版本
