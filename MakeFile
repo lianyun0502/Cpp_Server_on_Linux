@@ -1,4 +1,29 @@
+
+src=$(wildcard src/*.cpp)
+
 server:
-	@echo "Starting server..."
-	g++ src/utils.cpp src/Socket.cpp src/Epoll.cpp src/Event.cpp src/EventLoop.cpp src/Acceptor.cpp src/Connection.cpp server.cpp --std c++23 -o output/server 
-	g++ client.cpp src/utils.cpp src/Socket.cpp -o output/client 
+	@echo "Start buliding server..."
+	g++ --std c++23 -pthread  -g \
+	$(src) \
+	server.cpp \
+	-o output/server 
+	
+clinet:
+	@echo "Start buliding client..."	
+	g++ \
+	src/utils.cpp src/Socket.cpp \
+	client.cpp \
+	-o output/client 
+
+th:
+	@echo "Start buliding ThreadPoolTest..."
+	g++ -pthread \
+	ThreadPoolTest.cpp \
+	-o ThreadPoolTest
+
+test:
+	@echo "Start buliding test..."
+	g++ -pthread \
+	src/utils.cpp src/Connection.cpp src/Socket.cpp src/Event.cpp src/EventLoop.cpp src/Epoll.cpp \
+	ClientPoolTest.cpp \
+	-o test

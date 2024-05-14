@@ -20,6 +20,7 @@
 #include <functional>
 #include <iostream>
 #include <memory>
+#include <future>
 
 using namespace std;
 
@@ -64,14 +65,31 @@ public:
     }
 
 
-    void addTask(function<void()> task)
+    // void addTask(function<void()> task)
+    // {   
+    //     {
+    //         lock_guard<mutex> lock = lock_guard<mutex>(_mutex);
+    //         _task_q.emplace(task);
+    //         //  cout<<"addTask : "<< typeid(task).hash_code() << endl;
+    //     }
+    //     _cv->notify_one();
+    // }
+    template<typename F, typename... Args>
+    future<typename result_of<F(Args...)>::type>
+    addTask(F&& func, Args&&... args)
     {   
+        using result_type = typename result_of<F(Args...)>::type;
+        auto task = make_shared<packaged_task<result_type()>>(
+            bind(forward<F>(func), forward<Args>(args)...)
+        );
+        future<result_type> res = task->get_future();
         {
             lock_guard<mutex> lock = lock_guard<mutex>(_mutex);
-            _task_q.emplace(task);
+            _task_q.emplace([task](){(*task)();});
             //  cout<<"addTask : "<< typeid(task).hash_code() << endl;
         }
         _cv->notify_one();
+        return res;
     }
     void stop()
     {
